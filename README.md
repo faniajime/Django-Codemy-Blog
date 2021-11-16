@@ -1,8 +1,9 @@
 # Django-Codemy-Blog
 
-I wrote the code for the Django Codemy.com tutorial with some added features. 
+We wrote the code for the Django Codemy.com tutorial with some added features. 
 
 Some features such as the profile information were not implemented, yet the rest of the videos are here in case you need a code basis.
+This code was developed with the help of github user @kelarao
 
 These are the videos I based the code into:
 
