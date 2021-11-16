@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Borrar Post {% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+        <h1> Borrar Post </h1>
+        <br/><br/>
+        <h3>Borrar: {{ post.title }} </h3>
+        <br/>
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+            <strong> Esta acción es irreversible </strong><br/>
+            <br/>
+            <button class="btn btn-secondary">Borrar Post!</button>
+        </div>
+    {% endif %}
+{% else %}
+    You are not logged in.
+{% endif %}
+
+{% endblock %}

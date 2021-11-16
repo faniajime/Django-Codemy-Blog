@@ -1,0 +1,17 @@
+
+.title{
+    overflow: auto;
+    top:0!important;
+    height: 100%;
+    padding: 0;
+    margin-left: 0;
+    background: rgba(102, 160, 235, 0.6);
+    padding:5vh;
+    border:1px solid;
+    border-radius: 5px;
+    border-color: #000;
+}
+
+#blog-title{
+    text-align: center;
+}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-9">
+      <h1> Posts del blog </h1>
+      <br/>
+      {% for post in page_obj %}
+          <div class="card">
+          <h5 class="card-header"><a href = "{% url 'article-detail' post.pk %}"> {{ post.title }}  </a></h5>
+              {% if post.header_image %}
+                  <img class="card-img-top" src="{{post.header_image.url}}" alt='Post header'>
+                  <br/>
+              {% endif %}
+          
+              <div class="card-body">
+                 - Categoría: <a href = "{% url 'category' post.category|slugify %}"> {{ post.category }} </a>
+                 - Autor: {{ post.author.first_name }} {{ post.author.last_name }} - {{ post.post_date }}
+                 - Comentarios: {{post.total_comments}}
+                  {% if user.is_authenticated %}
+                      {% if user.id == post.author.id %}
+                          <a href="{% url 'update_post' post.pk %}"> (Edit) </a>
+                          <a href="{% url 'delete_post' post.pk %}"> (Delete) </a>
+                      {% endif %}
+                  {% endif %}
+                  </br> </br>
+                  <h5>
+                      {{ post.body|slice:":300"|safe }}
+                  </h5>
+              </div>
+              
+          </div>
+          <br/>
+      {% endfor%}
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+              {% if page_obj.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primera</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previa</a></li>
+              {% endif %}
+
+              <li class="page-item disabled"><a href="#" class= "page-link">
+                  Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+              </a></li>
+
+              {% if page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a></li>
+              {% endif %}
+        </ul>
+      </nav>
+    </div>
+    <div class="col">
+        <h1> Categorías </h1>
+        <br/>
+          {% for item in cat_menu %}
+            <h5 style="font-weight: normal"><li><a href="{% url 'category' item|slugify %}">{{ item }}</a></li></h5>
+          {% endfor %}
+          <br/>
+          <h1> Autores </h1>
+          <br/>
+          {% for item in users %}
+            <h5 style="font-weight: normal"><li><a href="{% url 'user_posts' item.pk|slugify %}">{{ item }}</a></li><h5>
+         {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
